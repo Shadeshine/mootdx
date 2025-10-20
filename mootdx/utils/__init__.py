@@ -77,6 +77,32 @@ def get_stock_market(symbol='', string=False):
 
     return market
 
+def get_index_market(symbol: str) -> int:
+    if symbol.startswith(('sh', 'sz', 'SH', 'SZ', 'bj', 'BJ')):
+        market = symbol[:2].lower()
+
+    else:
+
+        if symbol.startswith(('00', '88', '99')):
+            market = "sh"
+        elif symbol.startswith('899'):
+            market =  "bj"
+        elif symbol.startswith(('399', '47', '48', '97', '98')):
+            market =  "sz"
+        else:
+            market =  "sz"
+
+    if market == 'sh':
+        market = MARKET_SH
+
+    if market == 'sz':
+        market = MARKET_SZ
+
+    if market == 'bj':
+        market = MARKET_BJ
+
+    return market
+
 
 def gpcw(filepath):
     cw_file = open(filepath, 'rb')
