@@ -20,7 +20,7 @@ from mootdx.consts import return_last_value
 from mootdx.exceptions import MootdxValidationException
 from mootdx.logger import logger
 from mootdx.server import check_server
-from mootdx.utils import get_frequency
+from mootdx.utils import get_frequency, get_index_market
 from mootdx.utils import get_stock_market
 from mootdx.utils import get_stock_markets
 from mootdx.utils import to_data
@@ -260,7 +260,7 @@ class StdQuotes(BaseQuotes):
         frequency = get_frequency(frequency)
         offset = (offset, 800)[offset > 800]
 
-        market = (MARKET_SZ, MARKET_SH)[symbol[:2] in ['00', '88', '99']]
+        market = get_index_market(symbol)
         result = self.client.get_index_bars(int(frequency), int(market), str(symbol), int(start), int(offset))
 
         return to_data(result, symbol=symbol, client=self, **kwargs)
