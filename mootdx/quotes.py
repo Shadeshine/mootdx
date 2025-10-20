@@ -483,7 +483,7 @@ class StdQuotes(BaseQuotes):
         frequency = get_frequency(frequency)
 
         offset = (offset, 800)[offset > 800]
-        market = (MARKET_SZ, MARKET_SH)[symbol[:2] in ['00', '88', '99']]
+        market = get_index_market(symbol)
         result = self.client.get_index_bars(int(frequency), int(market), str(symbol), int(start), int(offset))
 
         return to_data(result, symbol=symbol, client=self, **kwargs)
